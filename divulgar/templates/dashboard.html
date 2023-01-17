@@ -1,0 +1,43 @@
+{% extends "_base.html" %}
+{% block content %}
+
+<h2 class="mt-20 mb-2 text-center font-extrabold md:text-6xl">
+    Quantidade de adoções por raça
+  </h2>
+  <div class="card flex-shrink-0 mx-auto mt-10 mb-5 w-full max-w-sm md:max-w-md lg:max-w-2xl bg-base-100">   
+        <canvas id="myChart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+        fetch("/divulgar/api_adocoes_por_raca/",{
+            method: 'GET',
+        }).then(function(result){
+            return result.json()
+        }).then(function(data_adocoes){
+           
+            const data = {
+                labels: data_adocoes['labels'],
+                datasets: [{
+                label: 'Peso paciente',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: data_adocoes['qtd_adocoes'],
+                }]
+            };
+
+            const config = {
+                type: 'line',
+                data: data,
+                options: {}
+            };
+
+            const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+        })
+    </script>
+{% endblock content %}
+    

@@ -1,0 +1,36 @@
+{% extends "_base.html" %}
+{% block content %}
+
+                <div style="padding: 30px" class="col-md">
+                    <div class="row">
+                        {% if messages %}
+                            <br>
+                            {% for message in messages %}
+                                <div class="alert {{message.tags}}">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        {% for pedido in pedidos %}
+                            
+                        <div class="card w-96 bg-base-100 shadow-xl">
+                            <figure><img src="{{pedido.pet.foto.url}}" /></figure>
+                            <div class="card-body">
+                              <h2 class="card-title">
+                                {{pedido.pet.nome}}
+                                <div class="badge badge-outline">{{pedido.pet.cidade}}</div> 
+                                <div class="badge badge-outline">{{pedido.pet.telefone}}</div>
+                              </h2>
+                              <p>{{pedido.usuario.username}}</p>
+                              <div class="card-actions justify-end">
+                                <a href="{% url 'processa_pedido_adocao' pedido.id %}?status=A" class="btn btn-success">Aprovar</a>
+                                <a href="{% url 'processa_pedido_adocao' pedido.id %}?status=R" class="btn btn-error">Recusar</a>
+                              </div>
+                            </div>
+                          </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock content %}
